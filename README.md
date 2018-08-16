@@ -54,6 +54,16 @@ verifier.results.length # => 1
 From CSV-files
 
 ```ruby
+input_path = '/tmp/in.csv'
+output_path = '/tmp/out.csv'
+# create demo data
+File.write(input_path, <<~CSV
+  from_url,to_url
+  http://jacobburenstam.com/,https://jacobburenstam.com/
+  http://example.com/,https://google.com/
+CSV
+)
+
 # input_path - must be a CSV file with two columns: from_url, to_url (order doesn't matter)
 VerifyRedirects.from_csv(input_path: input_path, output_path: output_path) do |result|
   unless result.success
