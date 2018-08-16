@@ -1,0 +1,30 @@
+#!/usr/bin/env ruby
+# frozen_string_literal: true
+
+# USAGE:
+#   $ verify_redirects --help
+
+# for dev purposes
+require 'bundler/setup' if ENV['VERIFY_REDIRECTS_GEM_DEV']
+
+require 'verify_redirects'
+require 'verify_redirects/cli'
+
+options = VerifyRedirects::CLI.parse(argv: ARGV, name: 'verify_redirects')
+
+input_path = options[:input] || fail(ArgumentError, '--input required - CSV file path must be provided')
+output_path = options[:output] || input_path.gsub(/\.csv/, '-redirect-results.csv')
+debug = options.fetch(:debug, false)
+
+VerifyRedirects.configure { |c| c.debug = debug }
+
+VerifyRedirects.from_csv(input_path: input_path, output_path: output_path) do |result|
+  unless result.success
+    loc_part = if result.location
+                 "instead redirected to #{result.location}"
+               else
+                 "didn't redirect"
+               end
+    puts "[FAILED] #{result.url} should redirect to #{result.expected} but #{loc_part}."
+  end
+end
