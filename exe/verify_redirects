@@ -28,3 +28,6 @@ VerifyRedirects.from_csv(input_path: input_path, output_path: output_path) do |r
     puts "[FAILED] #{result.start_url} should redirect to #{result.expected_redirect} but #{loc_part}."
   end
 end
+
+puts
+puts "Wrote output to: #{output_path}"
