@@ -184,7 +184,8 @@ Metrics/LineLength:
   Enabled: true
   Max: 95
   Exclude:
-  - lib/verify_redirects/cli/*
+  - exe/verify_redirects
+  - lib/verify_redirects/cli.rb
   - Gemfile
   - verify_redirects.gemspec
   - spec/**/*
