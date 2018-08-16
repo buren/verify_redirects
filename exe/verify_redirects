@@ -20,11 +20,11 @@ VerifyRedirects.configure { |c| c.debug = debug }
 
 VerifyRedirects.from_csv(input_path: input_path, output_path: output_path) do |result|
   unless result.success
-    loc_part = if result.location
-                 "instead redirected to #{result.location}"
+    loc_part = if result.redirected_to
+                 "instead redirected to #{result.redirected_to}"
                else
                  "didn't redirect"
                end
-    puts "[FAILED] #{result.url} should redirect to #{result.expected} but #{loc_part}."
+    puts "[FAILED] #{result.start_url} should redirect to #{result.expected_redirect} but #{loc_part}."
   end
 end

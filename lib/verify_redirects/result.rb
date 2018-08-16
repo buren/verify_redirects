@@ -4,17 +4,17 @@ require 'csv'
 
 module VerifyRedirects
   class Result
-    attr_reader :success, :url, :location, :expected
+    attr_reader :success, :start_url, :redirected_to, :expected_redirect
 
-    def initialize(success:, url:, location:, expected:)
+    def initialize(success:, start_url:, redirected_to:, expected_redirect:)
       @success = success
-      @url = url
-      @location = location
-      @expected = expected
+      @start_url = start_url
+      @redirected_to = redirected_to
+      @expected_redirect = expected_redirect
     end
 
     def to_a
-      [success, url, location, expected]
+      [success, start_url, redirected_to, expected_redirect]
     end
   end
 end

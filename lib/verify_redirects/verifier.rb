@@ -15,19 +15,19 @@ module VerifyRedirects
 
     def call(from_url, expected_to)
       url = to_url(from_url)
-      expected = remove_spaces(expected_to)&.force_encoding('UTF-8')
+      expected_redirect = remove_spaces(expected_to)&.force_encoding('UTF-8')
 
       puts "GET #{url}" if debug?
       response = Http.get(url)
       # Paths can contain scary characters: 'sa-far-du-ersatt\xE2\x80\xA6marens-flygstrul/'
-      location = response.headers['Location']&.force_encoding('UTF-8')
-      success = location == expected # if both are nil - no redirect is the success case
+      redirected_to = response.headers['Location']&.force_encoding('UTF-8')
+      success = redirected_to == expected_redirect # if both are nil - no redirect is the success case
 
       Result.new(
         success: success,
-        url: url,
-        location: location,
-        expected: expected
+        start_url: url,
+        redirected_to: redirected_to,
+        expected_redirect: expected_redirect
       ).tap { |r| @results << r }
     end
 

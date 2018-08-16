@@ -1,8 +1,6 @@
-# VerifyRedirects
+# VerifyRedirects - Verify HTTP redirects
 
-Welcome to your new gem! In this directory, you'll find the files you need to be able to package up your Ruby library into a gem. Put your Ruby code in the file `lib/verify_redirects`. To experiment with that code, run `bin/console` for an interactive prompt.
-
-TODO: Delete this and the text above, and describe your gem
+Verify HTTP redirects - comes with CLI and CSV support (you can of course use plain Ruby too).
 
 ## Installation
 
@@ -20,9 +18,48 @@ Or install it yourself as:
 
     $ gem install verify_redirects
 
-## Usage
+## CLI usage
 
-TODO: Write usage instructions here
+```
+Usage: verify_redirects --help
+        --input=val0                 CSV file path (required) - must be a file with two columns: from_url, to_url
+        --output=val0                CSV output path (optional)
+        --[no-]debug                 Print debug output (default: false)
+    -h, --help                       How to use
+```
+
+## Ruby usage
+
+Use the verifier directly
+```ruby
+verifier = Verifier.new
+
+[
+  # from_url, to_url
+  %w[http://example.com/jacobburenstam https://jacobburenstam.com/]
+  # ...
+].each do |data|
+  from, to = data
+  result = verifier.call(from, to)
+
+  result.success # => false
+  result.start_url # => 'http://example.com/jacobburenstam'
+  result.expected_redirect # => 'https://jacobburenstam.com/'
+  result.redirected_to # => nil
+end
+
+verifier.results.length # => 1
+```
+
+From CSV-files
+
+```ruby
+VerifyRedirects.from_csv(input_path: input_path, output_path: output_path) do |result|
+  unless result.success
+    puts "Failed redirect for #{result.start_url}"
+  end
+end
+```
 
 ## Development
 
