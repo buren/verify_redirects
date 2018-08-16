@@ -22,7 +22,7 @@ Or install it yourself as:
 
 ```
 Usage: verify_redirects --help
-        --input=val0                 CSV file path (required) - must be a file with two columns: from_url, to_url
+        --input=val0                 CSV file path (required) - must be a file with two columns: from_url, to_url (order doesn't matter)
         --output=val0                CSV output path (optional)
         --[no-]debug                 Print debug output (default: false)
     -h, --help                       How to use
@@ -54,6 +54,7 @@ verifier.results.length # => 1
 From CSV-files
 
 ```ruby
+# input_path - must be a CSV file with two columns: from_url, to_url (order doesn't matter)
 VerifyRedirects.from_csv(input_path: input_path, output_path: output_path) do |result|
   unless result.success
     puts "Failed redirect for #{result.start_url}"
@@ -73,4 +74,4 @@ Bug reports and pull requests are welcome on GitHub at https://github.com/buren/
 
 ## License
 
-The gem is available as open source under the terms of the [MIT License](https://opensource.org/licenses/MIT).
+The gem is available as open source under the terms of the [MIT License](LICENSE).

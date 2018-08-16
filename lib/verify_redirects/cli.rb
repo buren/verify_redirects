@@ -10,7 +10,7 @@ module VerifyRedirects
         parser.banner = "Usage: #{name} --help"
         parser.default_argv = argv
 
-        parser.on('--input=val0', String, 'CSV file path (required) - must be a file with two columns: from_url, to_url') do |string|
+        parser.on('--input=val0', String, "CSV file path (required) - must be a file with two columns: from_url, to_url (order doesn't matter)") do |string|
           options[:input] = string
         end
 
