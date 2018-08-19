@@ -32,7 +32,7 @@ Usage: verify_redirects --help
 
 Use the verifier directly
 ```ruby
-verifier = Verifier.new
+verifier = VerifyRedirects::Verifier.new
 
 [
   # from_url, to_url
